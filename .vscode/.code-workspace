@@ -1,0 +1,42 @@
+{
+	"folders": [ { "path": ".." } ],
+	"extensions": {"recommendations": ["Vue.volar", "syler.sass-indented", "glenn2223.live-sass"]},
+	
+	"settings": 
+	{
+		"explorer.fileNesting.enabled": true,
+        "files.exclude": { "**/.github": true, "**frontend/.data": true, "**frontend/.output": true, "**frontend/.netlify": true, "**frontend/.nuxt": true, "**frontend/node_modules": true, "**/.output" : true, "**/.netlify" : true , "**frontend/dist" : true, "**frontend/tina/__generated__" : true},
+
+		"explorer.fileNesting.patterns": {
+    	"tsconfig.json": "tsconfig.*.json, env.d.ts",
+    	"vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*",
+    	"package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .oxlint*, oxlint*, .prettier*, prettier*, .editorconfig"
+  		},
+
+  		"conventionalCommits.scopes": [
+			"SASS",
+			"Anchor",
+			"Logikk",
+			"Compile",
+			"Cleanup",
+			"Reactive",
+			"Workspace",
+			"Migrering",
+			"Architecture",
+			"Package",
+			"Content",
+			"CMS",
+			"News",
+			"Authentication",
+			"UI",
+			"Types",
+			"Interface",
+			"Component",
+			"Schema",
+			"Types",
+			"Media",
+			"Article",
+		],
+	},
+	
+}
