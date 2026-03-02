@@ -15,7 +15,7 @@ graph LR
     AR[Add Resturant +]
     D[Resturant Details]
     API[CMS API]
-    EAPI[External API]
+    EAPI[Kartverket API]
 
     subgraph CMS
         Tina
@@ -40,5 +40,4 @@ graph LR
     %% styles
     style Tina fill: #007BFF
     style Nuxt fill:#FF6B00,stroke:#333
-
 ```
