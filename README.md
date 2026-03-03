@@ -1,25 +1,33 @@
-# Overview of PuraSecurus
+# PuraSecurus
+PuraSecurus is a location-focused web application built with Nuxt 3.
+The architecture is designed to balance discoverability, security, and performance for map-based experiences.
 
-## Architecture decision
+## Architecture Decisions
+Nuxt 3 is chosen over a client-only Vue setup to solve key platform requirements:
 
-### The Argument
-The project using Nuxt 3 as a framework, insted of pure Vue, to solve three critical challanges for location services :
+- **SEO & discoverability**: Server-side rendering (SSR) helps search engines index restaurant pages and municipality listings correctly.
+- **Secure geodata handling**: Nitro server routes handle reverse geocoding and data lookups on the server, keeping API keys out of the browser.
+- **Hybrid performance**: SSR delivers fast initial content, while `<ClientOnly>` is used for heavier interactive map components.
+- **CMS-friendly content model**: The project can use a CMS-driven workflow for location content without requiring a traditional backend-heavy architecture.
 
-    -   **SEO & Discoverability** - Using Server-sided Rendering (SSR) ensures that resturant pages and Municipality lists indexing correctly through the search engine, which is crucial for user experience.
+## Tech Stack
 
-    -   **Secure Geodata Handling** - By using the built-in server engine (Nitro), we can perform reverse geocoding & database queries on the server-side. This secures API-keys and reduces the load on the client.
+- **CMS**: TinaCloud
+- **Frontend**: Nuxt 3
+- **Server runtime**: Nitro
+- **Map library**: MapLibre GL JS
+- **Geodata source**: Kartverket API (GeoNorge)
 
-    -   **Performance through Hybrid Rendering** - By combining SSR for Static Information & ```<ClientOnly>``` for heavy map components, we optimize "Time to Content" while the geolocation keeps its interactivity.
+## Documentation
 
-    -   **Available for CMS** - With SSR framework, we do not need traditional backend or database to solve the issue. We can use a CMS to document new locations.
+- [System Context Diagram](./docs/SystemContextDiagram.md)
+- [Sequence Diagram](./docs/sequenceDiagram.md)
 
-## Techstack
-    CMS : **TinaCloud**
-    Client : **Nuxt v3**
-    Geo Library : **MapLibre GL JS**
-    Geo Data Source : **Kartverket API** ( Geo Norge )
+## Repository Structure
 
-##  Context Diagram
-[System Context Diagram](./docs/SystemContextDiagram.md)
-[Sequence Diagram](./docs/SequenceDiagram.md)
-[State Diagram](./docs/StateDiagram.md)
+```text
+docs/
+	sequenceDiagram.md
+	SystemContextDiagram.md
+README.md
+```
