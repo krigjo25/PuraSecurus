@@ -1,7 +1,6 @@
 ```mermaid
 ---
 title: "System Context Diagram"
-
 ---
 graph LR
 
