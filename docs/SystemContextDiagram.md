@@ -7,42 +7,51 @@ graph LR
     User[User]
     Admin[Content Manager]
 
-    subgraph Frontend[Frontend - Reflex + HTMX]
-        Nav[Navigation]
+    subgraph PythonFrontend[Python Frontend Layer]
+        UI[Reflex + HTMX UI]
         Pages[Content Pages]
         Form[Add Location Form]
         MapView[Map View - Pydeck]
     end
 
-    subgraph Backend[Backend - FastAPI]
+    subgraph BackendCore[Python Backend - FastAPI]
         Routes[Typed API Routes]
-        Validation[Pydantic Models]
-        GeoEngine[Pandas + GeoPandas]
-        ContentAPI[Content Integration Layer]
+        Validation[Pydantic Validation Layer]
+        GeoEngine[Pandas/GeoPandas Engine]
+        ContentLayer[Content Integration Layer]
     end
 
-    subgraph DataSources[External Services]
-        Kart[Kartverket API]
+    subgraph ContentManagement[Content & Version Control]
         CMS[Wagtail or FastAPI-Markdown]
         GitHub[(GitHub Repository)]
     end
 
-    User --> Nav
-    Nav --> Pages
-    Nav --> Form
-    Nav --> MapView
+    subgraph ExternalServices[External Services]
+        Kart[Kartverket API]
+    end
 
-    Form --> Routes
+    User --> UI
+    UI --> Pages
+    UI --> Form
+    UI --> MapView
+
     Pages --> Routes
+    Form --> Routes
     MapView --> Routes
 
     Routes --> Validation
-    Routes --> GeoEngine
+    Validation --> GeoEngine
+    Validation --> ContentLayer
+
     GeoEngine --> Kart
-
-    Routes --> ContentAPI
-    ContentAPI --> CMS
-    ContentAPI --> GitHub
-
+    
+    ContentLayer --> CMS
+    ContentLayer --> GitHub
+    
     Admin --> CMS
+    CMS --> GitHub
+
+    style PythonFrontend fill:#FF6B00
+    style BackendCore fill:#007BFF
+    style ContentManagement fill:#007BFF
 ```

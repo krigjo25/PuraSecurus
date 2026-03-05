@@ -2,6 +2,53 @@
 PuraSecurus is a location-focused web application built with Python. The architecture is
 designed to balance discoverability, security, & performance for map-based experiences.
 
+## Getting Started
+
+### Prerequisites
+- Python 3.10 or higher
+- Git
+- (Optional) Redis for session management and caching
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/krigjo25/PuraSecurus.git
+   cd PuraSecurus
+   ```
+
+2. **Create and activate a virtual environment**
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+   See [requirements.txt](./requirements.txt) for the complete list of dependencies.
+
+### Running the Application
+
+1. **Start the development server**
+   ```bash
+   reflex run
+   ```
+
+2. **Access the application**
+   - Frontend: `http://localhost:3000`
+   - API documentation: `http://localhost:8000/docs`
+
+### Key Dependencies
+- **FastAPI** - Backend API framework
+- **Reflex** - Python-based frontend framework
+- **Pydantic** - Data validation and schema definition
+- **PyDeck** - Map visualization with GPU acceleration
+- **Pandas/GeoPandas** - Geospatial data processing
+- **SQLAlchemy/SQLModel** - Database ORM
+
 ## Architectural Decisions
 
 ### Architecture Question
@@ -82,5 +129,3 @@ needs become larger.
 -	[System Context Diagram](./docs/SystemContextDiagram.md)
 -	[User Journey Diagram](./docs/userJourney-flowChartDiagram.md)
 -	[Form Submission Diagram](./docs/FormSubmission-stateDiagram.md)
-
-```
