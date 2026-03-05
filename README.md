@@ -1,48 +1,81 @@
 # PuraSecurus
-PuraSecurus is a location-focused web application built with Nuxt 3.
-The architecture is designed to balance discoverability, security, and performance for map-based experiences.
+PuraSecurus is a location-focused web application built with Python. The architecture is
+designed to balance discoverability, security, & performance for map-based experiences.
 
-## Tech Stack
-- **CMS**: TinaCloud
-- **Client**: Nuxt 3 / TS
-- **Server runtime**: Nitro
-- **Map library**: MapLibre GL JS
-- **Geodata source**: Kartverket API (GeoNorge)
+## Architectural Decisions
 
-### Architecture Decisions
+### Architecture Question
+How do we keep one simple and consistent user experience across content pages, forms, and maps,
+while also meeting security needs and keeping page load times fast?
 
-#### Framework
-We are developing a modern application that processes  Geographic data. The core functionality requires the webpage to communicate with external services, to accurately find  & locate Municipalities. and depends on external API to fetch municipalities. 
+### Techstack
+-	Backend Technology: **FastAPI**
+-	Backend/Frontend: **Python (Reflex + HTMX)**
+-	Data Validation: **Pydantic** (Sikrer dataintegritet fra eksterne API-er)
+-	Data Engine: **Pandas / GeoPandas**
+-	Native CMS: Wagtail (Headless) eller FastAPI-Markdown (Innholdsstyring direkte i Python)
 
-The main challenge was managing complex data structure that traditionally require separate, manual maintenance. The goal is to replace this fragmented approach with a unified, secure & SEO friendly, resolves these complexities & ensures high visibility on search engines.
+-	Map Library: **Pydeck** (basert på deck.gl)
+-	Geodata source: **Kartverket API** (GeoNorge)
 
-By Implementing Nuxt as the primary framework those complexities can be resolved.
 
--	By moving API communication to the server level, hides sensitive credentials & handle data securely
+### Architectural Justification
+#### Unified Language Strategy (Python)
+Python was chosen for both backend and frontend-related logic to keep development simple and
+consistent.
 
--	Nuxt renders content on the server making it instantly readable for search engines, unlike standard apps that load content slowly.
+**Same language everywhere**
+Using one language means less confusion, faster teamwork, and easier onboarding for new
+developers.
 
--	Nuxt unifies data management, which removes the need for a separate backend maintenance.
+**One shared data model**
+The same municipality and geodata models can be used across the app, which reduces errors and
+keeps behavior predictable.
 
-#### CMS
-We're developing a modern webapp with Nuxt, which requires flexibility and efficient system for content management. Traditionall backend/CMS, requires often a separate database, which separates code and content. While Headless CMS is often git based. As the main goal is to create an architecture that minimize technical overhead, securing tracebacks (Version controll).
+**Less glue code**
+When everything is in Python, we avoid extra conversion layers between different languages.
+That saves time and reduces bugs.
 
-- TinaCloud was choosen as a CMS, to utilize the built-in capabilities for Nuxt's (`Nitro`-engine), which ensures seamless communication between Frontend & Backend.
+#### FastAPI as Backend Core
+FastAPI is used because it is fast, clear, and easy to maintain. For PuraSecurus, this gives:
+- A clear API boundary for map and municipality endpoints
+- Stable validation and error handling for external geodata
+- Built-in API documentation and easier testing
 
-- TinaCloud is designed to push user content into Github, rather than external database, which reduces cost and enhance the efficiency of content delivery.
+### Data Integerty with Pydantic
+Since PuraSecurus relies on critical geographic data from `Kartverket API`, Pydantic is used
+as a strict validation layer before data reaches the UI.
 
-- TinaCloud Defines Content Schemas as source code, to produce
+**Why this matters**
+- Invalid or incomplete data is stopped early
+- Clean, consistent schemas make map rendering stable
+- Shared models reduce crashes and unexpected UI behavior
 
-- TinaCloud takes adventage of **GRAPQL** for precise & efficent queries, minimizing data transer and improve load time.
+This turns uncertain external data into trusted internal data that can be used safely across
+the app.
 
-The integration of TinaCloud unifies the codebase & content, providing a single source of truth within Git. This eliminates database-related overhead, and provides Scalable content management.
+### Integrated Content Management (CMS)
+The architecture handles complex maps while keeping the site fast and secure. Heavy map data
+processing runs on the server, where credentials and integration keys stay protected.
 
-#### Libraries
-MapLibre GL JS - is a high-performance library for embedding interactive, GPU-accelerated 3D vector maps in web apps.
+All text and images are versioned in GitHub, which gives:
+- Full traceability for content and configuration changes
+- Simple rollback when regressions are detected
+- A lightweight editorial workflow without a dedicated content database in early phases
 
-#### API
-Geodata source - Kartverket API (GeoNorge).
+This gives a practical path: start simple now, then move to a headless CMS later if content
+needs become larger.
 
+### Performance and Security Posture
+- **Server-side geoprocessing (Pandas/GeoPandas):** keeps heavy computation off user devices
+	and gives more consistent results across browsers.
+- **Thin client map rendering (Pydeck):** keeps the browser focused on drawing the map quickly.
+- **Controlled data exposure:** only required fields are returned to clients, reducing attack
+	surface and payload size.
+- **Strong validation + typed routes:** makes issues easier to trace and fix.
+
+### Repository Structure
+	-	[Repository Architecture](./docs/architecture.md)
 
 ## Application Diagrams
 -	[Sequence Diagram](./docs/sequenceDiagram.md)
@@ -50,7 +83,4 @@ Geodata source - Kartverket API (GeoNorge).
 -	[User Journey Diagram](./docs/userJourney-flowChartDiagram.md)
 -	[Form Submission Diagram](./docs/FormSubmission-stateDiagram.md)
 
-
-## Repository Structure
-	-	[Repository Architecture](./docs/architecture.md)
 ```

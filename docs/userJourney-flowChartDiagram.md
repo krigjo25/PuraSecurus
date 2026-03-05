@@ -1,21 +1,37 @@
 ```mermaid
-flowchart BT
-    A[User opens 'ADD new Restaurant' page] --> B[User fills in Restaurant details Manually]
-    B --> IsMissingRequiredDetails --> C[Error Message Displayed]
-    C --> B
+flowchart TD
+    A[User opens the website] --> B[User reads content pages]
+    B --> C[User opens map view]
+    C --> D[User opens add location form]
+    D --> E[User fills in form fields]
 
-    B --> IsNotMissingRequiredDetails --> D[Did we get Municipalities Data From API?]
-    D --> NO --> B
+    E --> F{Required fields valid?}
+    F -->|No| G[Show clear validation error]
+    G --> E
 
+    F -->|Yes| H[Submit form to FastAPI]
+    H --> I[Pydantic validates input]
+    I --> J{Valid data?}
 
-    D --> YES --> E[Send POST Request to Nitro Server]
-    YES --> I[ Send user success message and redirect to 'list of Restaurants' page]
-    E --> F[ADD API KEY for Tina CMS]
-    F --> G[Oppretter Markdown i CMS]
-    G --> H[(Lagre Markdown i Github)]
+    J -->|No| K[Return error response]
+    K --> G
 
-    subgraph Moderation[Moderation Process]
-    J[Is Content Ok?] --> Yes --> K[Content Manager Approves 'silently Content']
-    J --> No --> L[Content Manager Removes Content]
+    J -->|Yes| L[Process geo data with Pandas/GeoPandas]
+    L --> M[Fetch or enrich data from Kartverket API]
+    M --> N[Save content via CMS layer]
+    N --> O[Version changes in GitHub]
+    O --> P[Return success response]
+    P --> Q[Show success and redirect user]
+
+    subgraph Moderation[Content moderation]
+        R[Content manager reviews submitted content]
+        S{Content acceptable?}
+        T[Publish or keep]
+        U[Edit or remove]
+        R --> S
+        S -->|Yes| T
+        S -->|No| U
     end
+
+    N --> R
 ```

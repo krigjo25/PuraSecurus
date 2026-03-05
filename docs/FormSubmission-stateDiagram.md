@@ -1,29 +1,35 @@
 ```mermaid
 ---
-title: State Diagram For Form Submission Process
+title: State Diagram for Form Submission Process
 ---
 stateDiagram-v2
-[*] --> Idle
-state Idle {
-    [*] --> WaitingForUserInput
-    WaitingForUserInput --> LocalValidation : User fills out form and clicks submit
+    [*] --> WaitingForInput
 
-}
+    WaitingForInput --> ClientValidation : User submits form
 
-state NuxtClient {
-    LocalValidation --> FormError: if (validation fails) Show Error Message (Do not preceed the POST operation)
-    FormError --> WaitingForUserInput: User corrects the form and clicks submit again
-    LocalValidation --> NitroServer: if (validation successful) Send POST request to Nitro Server
-}
-state NitroServer {
-    [*] --> ProcessingRequest
-    ProcessingRequest --> TinaCMS: ADD API-KEY & Format Data
-}
-state TinaCMS {
-    [*] --> CommitToGit
-    CommitToGit --> GithubRepo: Push changes to GitHub Repository
-}
+    ClientValidation --> InputError : Required fields missing
+    InputError --> WaitingForInput : User fixes form
 
-GitHubRepo --> Success : File Saved
-Success --> [*]
+    ClientValidation --> APISubmission : Basic checks pass
+
+    state FastAPI {
+        [*] --> RequestReceived
+        RequestReceived --> SchemaValidation : Validate with Pydantic
+
+        SchemaValidation --> APIValidationError : Invalid payload
+        APIValidationError --> [*]
+
+        SchemaValidation --> GeoProcessing : Payload valid
+        GeoProcessing --> ExternalDataSync : Optional Kartverket enrichment
+        ExternalDataSync --> ContentWrite : Save via CMS/content layer
+        ContentWrite --> GitVersioning : Commit content changes in GitHub
+        GitVersioning --> APISuccess
+        APISuccess --> [*]
+    }
+
+    APISubmission --> FastAPI
+    FastAPI --> Success : Success response returned
+    FastAPI --> InputError : Validation error returned
+
+    Success --> [*]
 ```

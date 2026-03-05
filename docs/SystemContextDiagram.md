@@ -1,42 +1,48 @@
 ```mermaid
 ---
-title: "System Context Diagram"
+title: "PuraSecurus System Context"
 ---
 graph LR
 
-    %% Participants
-    CMS[External Data]
-    Tina[(CMS / GIT)]
-    NAV[Main Navigation]
-    Router[Dynamic Route Handler]
+    User[User]
+    Admin[Content Manager]
 
-    LP[Resturants]
-    AR[Add Resturant +]
-    D[Resturant Details]
-    API[CMS API]
-    EAPI[Kartverket API]
-
-    subgraph CMS
-        Tina
+    subgraph Frontend[Frontend - Reflex + HTMX]
+        Nav[Navigation]
+        Pages[Content Pages]
+        Form[Add Location Form]
+        MapView[Map View - Pydeck]
     end
 
-    subgraph ExternalAPI[External Data]
-        EAPI
+    subgraph Backend[Backend - FastAPI]
+        Routes[Typed API Routes]
+        Validation[Pydantic Models]
+        GeoEngine[Pandas + GeoPandas]
+        ContentAPI[Content Integration Layer]
     end
 
-    subgraph Nuxt[Modern SSR-Framework]
-        NAV --> Router
-        Tina -.-> |Fetch Markdown| Router
-        Router --> LP
-        LP --> D
-        EAPI -.-> |Fetch Geo Data| LP
-
-        Router --> AR
-        AR --> API
-        API -.-> |Submit Mutation| Tina
+    subgraph DataSources[External Services]
+        Kart[Kartverket API]
+        CMS[Wagtail or FastAPI-Markdown]
+        GitHub[(GitHub Repository)]
     end
 
-    %% styles
-    style Tina fill: #007BFF
-    style Nuxt fill:#FF6B00,stroke:#333
+    User --> Nav
+    Nav --> Pages
+    Nav --> Form
+    Nav --> MapView
+
+    Form --> Routes
+    Pages --> Routes
+    MapView --> Routes
+
+    Routes --> Validation
+    Routes --> GeoEngine
+    GeoEngine --> Kart
+
+    Routes --> ContentAPI
+    ContentAPI --> CMS
+    ContentAPI --> GitHub
+
+    Admin --> CMS
 ```
