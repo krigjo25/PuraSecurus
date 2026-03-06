@@ -4,6 +4,7 @@ puraSecurus/.states
 assets/external/
 
 #   Python Cache Directories
+.logs/
 __pycache__/
 puraSecurus/__pycache__
 puraSecurus/__pycache__
