@@ -4,20 +4,20 @@ from rxconfig import config
 
 #   Internal Libraries
 from components.template.header import header
+from components.template.footer import footer
 
 
 class State(rx.State):
     """The app state."""
+    pass
 
 def layout_wrapper(page_content: rx.Component) -> rx.Component:
     return rx.fragment(                                                             #type: ignore - Fragment is a valid component, but pylance doesn't recognize it.)
     rx.color_mode.button(position="top-right"),                                     #type: ignore - ColorModeButton is a valid component, but pylance doesn't recognize it.
     
     header(),
-    
     rx.container(page_content),                                                     #type: ignore - Container is a valid component, but pylance doesn't recognize it.
-
-    #   footer()
+    footer()
     )
 
 def index() -> rx.Component:
