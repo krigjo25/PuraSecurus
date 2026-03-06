@@ -1,0 +1,10 @@
+#   Frontend Directories
+frontend/.web
+frontend/.states
+assets/external/
+frontend/__pycache__
+
+#   Frontend Files
+frontend/*.db
+frontend/*.py[cod]
+
