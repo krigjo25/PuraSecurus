@@ -1,0 +1,39 @@
+#   Python Libraries
+from typing import Dict, List
+
+#   Third-party Libraries
+import reflex as rx
+from pydantic import ValidationError
+
+#   Internal Libraries
+from components.navigation.anchor import anchor
+from utils.logger_config import NavigationWatcher
+from components.navigation.models import AnchorModel
+
+LOG = NavigationWatcher(dir="logs", name='Navigation-Watcher',level=3)
+LOG.file_handler()
+
+def anchor_navigation(anchors: List[Dict[str, str | List[str]]]) -> rx.Component:
+
+    validated_anchors: List[AnchorModel] = []
+
+    for item in anchors:
+        raw_cls = item.get("cls", [])
+        raw_href = item.get("href", "")
+        raw_label = item.get("label", "")
+        
+        try:
+            model: AnchorModel = AnchorModel(
+                label = raw_label if isinstance(raw_label, str) else "",
+                href = raw_href if isinstance(raw_href, str) else "",
+                cls = raw_cls if isinstance(raw_cls, list) else [])
+
+            validated_anchors.append(model)
+
+        except ValidationError as e:
+            LOG.error(f"Pydantic {e.__class__} anchor data: {e.errors()}")
+
+
+    list_of_anchors = [anchor(data) for data in validated_anchors]
+
+    return rx.hstack( *list_of_anchors ) #type: ignore - HStack is a valid component, but pylance doesn't recognize it.
