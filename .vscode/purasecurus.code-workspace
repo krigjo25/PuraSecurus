@@ -5,7 +5,7 @@
 	"settings": 
 	{
 		"explorer.fileNesting.enabled": true,
-        "files.exclude": { "**/.github": true, "**frontend/.data": true, "**frontend/.output": true, "**frontend/.netlify": true, "**frontend/.nuxt": true, "**frontend/node_modules": true, "**/.output" : true, "**/.netlify" : true , "**frontend/dist" : true, "**frontend/tina/__generated__" : true},
+        "files.exclude": { "**/.github": true, "**frontend/__pycache__": true },
 
 		"explorer.fileNesting.patterns": {
     	"tsconfig.json": "tsconfig.*.json, env.d.ts",
@@ -37,7 +37,9 @@
 			"Media",
 			"Article",
 			"Document",
-			"Diagram"
+			"Diagram",
+			"Dependencies",
+			".Gitignore"
 		],
 	},
 	
