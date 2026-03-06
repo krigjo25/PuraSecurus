@@ -21,9 +21,9 @@ class Logger(object):
         """
         
         
+        self.name = name
         self.dir: str = '.' + dir
         self.log = log.getLogger(f"{self.name}")
-        self.name = name or self.__class__.__name__
         dictionary = { 0: log.DEBUG, 1: log.INFO, 2: log.WARNING, 3: log.ERROR, 4: log.CRITICAL }
 
         try:
@@ -93,9 +93,9 @@ class Logger(object):
     def critical(self, message: str): self.log.critical(f"[!CRITICAL] : {message}")
 
 class AppWatcher(Logger):
-    def __init__(self, name:Optional[str] = None, dir:Optional[str] = None, level: int = 0):
+    def __init__(self, name: str, dir:Optional[str] = None, level: int = 0):
         super().__init__(dir = dir or '.logs', name=f"{self.__class__.__name__} -- {name}.log", level=level)
 
 class NavigationWatcher(Logger):
-    def __init__(self, name:Optional[str] = None, dir:Optional[str] = None, level: int = 0):
+    def __init__(self, name: str, dir:Optional[str] = None, level: int = 0):
         super().__init__(dir = dir or '.logs', name=f"{self.__class__.__name__} -- {name}.log", level=level)
