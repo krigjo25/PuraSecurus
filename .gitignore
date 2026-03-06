@@ -2,10 +2,17 @@
 puraSecurus/.web
 puraSecurus/.states
 assets/external/
+
+#   Python Cache Directories
+__pycache__/
 puraSecurus/__pycache__
-puraSecurus//__pycache__
+puraSecurus/__pycache__
 
 #   Frontend Files
+*.py[cod]
+.states
+.web
+*.db
 puraSecurus/*.db
 puraSecurus/*.py[cod]
 
