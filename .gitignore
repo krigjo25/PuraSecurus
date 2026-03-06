@@ -1,10 +1,11 @@
 #   Frontend Directories
-frontend/.web
-frontend/.states
+puraSecurus/.web
+puraSecurus/.states
 assets/external/
-frontend/__pycache__
+puraSecurus/__pycache__
+puraSecurus//__pycache__
 
 #   Frontend Files
-frontend/*.db
-frontend/*.py[cod]
+puraSecurus/*.db
+puraSecurus/*.py[cod]
 

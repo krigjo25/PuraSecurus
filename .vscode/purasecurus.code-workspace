@@ -5,7 +5,7 @@
 	"settings": 
 	{
 		"explorer.fileNesting.enabled": true,
-        "files.exclude": { "**/.github": true, "**frontend/__pycache__": true },
+        "files.exclude": { "**/.github": true, "**puraSecurus/__pycache__": true, "**puraSecurus/.web": true, "**puraSecurus/.states": true, },
 
 		"explorer.fileNesting.patterns": {
     	"tsconfig.json": "tsconfig.*.json, env.d.ts",
@@ -39,7 +39,8 @@
 			"Document",
 			"Diagram",
 			"Dependencies",
-			".Gitignore"
+			".Gitignore",
+			"Workflow"
 		],
 	},
 	
