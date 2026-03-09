@@ -8,8 +8,7 @@ class Logger(object):
     """
         Standard Logger to handle application logging using logging module.
     """
-
-    def __init__(self, name:str, dir:str, level: int):
+    def __init__(self, name:str, dir:str):
         """
             *   Initialize the logger
             *   Set the logging level based on the provided level
@@ -19,17 +18,11 @@ class Logger(object):
             *   param name: str - default: Class name
             *   param level: int - default: logging.DEBUG
         """
-        
-        
+
         self.name = name
         self.dir: str = '.' + dir
         self.log = log.getLogger(f"{self.name}")
-        dictionary = { 0: log.DEBUG, 1: log.INFO, 2: log.WARNING, 3: log.ERROR, 4: log.CRITICAL }
-
-        try:
-            if  level > 4 or level < 0: raise ValueError("Level must be an integer between 0 and 4.")
-            self.log.setLevel(dictionary.get(level, log.DEBUG))
-        except ValueError as e: self.log.error(f"ValueError in Logger initialization: {e}")
+        self.dictionary = { 0: log.INFO, 1: log.DEBUG, 2: log.WARNING, 3: log.ERROR, 4: log.CRITICAL }
 
         #   Initialize the Flags
         self.is_file: bool = False
@@ -82,20 +75,41 @@ class Logger(object):
         self.setup_handler(handler)                                                                                     #type: ignore - FileHandler is a valid type, but pylance doesn't recognize it.
         self.log.info(f"{self.name} has been initialized.")
 
-    def info(self, message: str): self.log.info(f"[!INFO] : {message}")
+    def info(self, message: str): 
 
-    def error(self, message: str): self.log.error(f"[!ERROR] : {message}")
+        level:int = 0
+        self.log.setLevel(self.dictionary.get(level, log.DEBUG))
 
-    def warn(self, message: str): self.log.warning(f"[!WARN] : {message}")
+        self.log.info(message)
 
-    def debug(self, message: str): self.log.debug(f"[!DEBUG] : {message}")
+    def error(self, message: str):
+        level:int = 3
+        self.log.setLevel(self.dictionary.get(level, log.DEBUG))
 
-    def critical(self, message: str): self.log.critical(f"[!CRITICAL] : {message}")
+        self.log.error(message)
+
+    def warn(self, message: str):
+        level:int = 2
+        self.log.setLevel(self.dictionary.get(level, log.DEBUG))
+
+        self.log.warning(message)
+
+    def debug(self, message: str):
+        level:int = 1
+        self.log.setLevel(self.dictionary.get(level, log.DEBUG))
+
+        self.log.debug(message)
+
+    def critical(self, message: str):
+        level:int = 4
+        self.log.setLevel(self.dictionary.get(level, log.DEBUG))
+
+        self.log.critical(message)
 
 class AppWatcher(Logger):
     def __init__(self, name: str, dir:Optional[str] = None, level: int = 0):
-        super().__init__(dir = dir or '.logs', name=f"{self.__class__.__name__} -- {name}.log", level=level)
+        super().__init__(dir = dir or 'logs', name=f"{self.__class__.__name__} -- {name}.log")
 
 class NavigationWatcher(Logger):
     def __init__(self, name: str, dir:Optional[str] = None, level: int = 0):
-        super().__init__(dir = dir or '.logs', name=f"{self.__class__.__name__} -- {name}.log", level=level)
+        super().__init__(dir = dir or 'logs', name=f"{self.__class__.__name__} -- {name}.log")
