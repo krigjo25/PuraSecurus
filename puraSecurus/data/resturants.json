@@ -1,0 +1,89 @@
+{
+    "resturants": [
+        {
+            "id": 1,
+            "name": "PuraSecurus Diner",
+            "cuisine": "American",
+            "location": "123 Main St, Anytown, USA",
+            "rating": 4.5,
+            "price_range": "$$",
+            "description": "A cozy diner offering classic American dishes with a modern twist.",
+            "menu":
+            [
+                {
+                    "price": 10.99,
+                    "name": "Classic Burger",
+                    "allergens": ["dairy"],
+                    "description": "A juicy beef patty with lettuce, tomato, and our special sauce."
+                },
+                {
+                    "name": "PuraSecurus Salad",
+                    "description": "A fresh mix of greens, cherry tomatoes, cucumbers, and our house vinaigrette.",
+                    "allergens": ["nuts"],
+                    "price": 8.99
+                },
+                {
+                    "name": "Grilled Chicken Sandwich",
+                    "description": "Marinated grilled chicken breast with lettuce, tomato, and mayo on a toasted bun.",
+                    "allergens": ["dairy"],
+                    "price": 9.99
+                }
+
+            ],
+            "image_url": "https://example.com/images/purasecurus_diner.jpg"
+        },
+        {
+            "id": 2,
+            "rating": 4.8,
+            "price_range": "$$$",
+            "cuisine": "Japanese",
+            "name": "Securus Sushi Bar",
+            "location": "456 Elm St, Anytown, USA",
+            "image_url": "https://example.com/images/securus_sushi_bar.jpg",
+            "description": "An upscale sushi bar serving fresh and innovative sushi creations.",
+
+            "menu": [
+                {
+                    "name": "Securus Roll",
+                    "description": "A signature roll with spicy tuna, avocado, and tempura flakes.",
+                    "price": 12.99,
+                    "allergens": ["fish", "shellfish"]
+                },
+                {
+                    "name": "Dragon Roll",
+                    "description": "Eel and cucumber roll topped with avocado and eel sauce.",
+                    "price": 14.99,
+                    "allergens": ["fish", "soy"]
+                },
+                {
+                    "name": "Vegetarian Roll",
+                    "description": "A delicious roll filled with cucumber, avocado, and carrot.",
+                    "price": 9.99,
+                    "allergens": ["soy"]
+                }
+            ]
+            
+        },
+        {
+            "id": 3,
+            "rating": 4.2,
+            "price_range": "$",
+            "cuisine": "Italian",
+            "name": "PuraSecurus Pizzeria",
+            "location": "789 Oak St, Anytown, USA",
+            "image_url": "https://example.com/images/purasecurus_pizzeria.jpg",
+            "description": "A casual pizzeria offering a variety of delicious pizzas and Italian dishes.",
+            "menu":[
+                {
+                    "id": 0,
+                    "name": "Margherita Pizza",
+                    "description": "Classic pizza with fresh tomatoes, mozzarella, and basil.",
+                    "price": 12.99,
+                    "spicy": 0,
+                    "allergens": ["dairy", "nut"]
+                }
+            ]
+            
+        }
+    ]
+}
