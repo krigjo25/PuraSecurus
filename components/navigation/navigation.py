@@ -6,12 +6,12 @@ import reflex as rx
 from pydantic import ValidationError
 
 #   Internal Libraries
+from utils.logger import NavigationWatcher
 from components.navigation.anchor import anchor
-from utils.logger_config import NavigationWatcher
 from components.navigation.models import AnchorModel
 
-LOG = NavigationWatcher(dir="logs", name='Navigation-Watcher',level=3)
-LOG.file_handler()
+logger = NavigationWatcher(name='Navigation-Watcher')
+logger.file_handler()
 
 def anchor_navigation(anchors: List[Dict[str, str | List[str]]]) -> rx.Component:
 
@@ -31,7 +31,7 @@ def anchor_navigation(anchors: List[Dict[str, str | List[str]]]) -> rx.Component
             validated_anchors.append(model)
 
         except ValidationError as e:
-            LOG.error(f"Pydantic {e.__class__} anchor data: {e.errors()}")
+            logger.error(f"Pydantic {e.__class__} anchor data: {e.errors()}")
 
 
     list_of_anchors = [anchor(data) for data in validated_anchors]
