@@ -12,8 +12,7 @@ class AnchorModel(BaseModel):
     @field_validator("cls", mode="before")
     def validate_cls(cls, value: str | List[str]) -> str | List[str]:
         if isinstance(value, str): return [value]
-        elif isinstance(value, list): return [str(c) for c in value]            #type: ignore - This is a valid return type, but pylance doesn't recognize it.
-        else: return []
+        else: return [str(c) for c in value]     
 
     @property
     def is_external(self) -> bool:
